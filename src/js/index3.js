@@ -23,6 +23,7 @@ function App() {
     this.menu[this.currentCategory] = await MenuApi.getAllMenuByCategory(
       this.currentCategory,
     );
+    console.log(2);
 
     const template = this.menu[this.currentCategory]
       .map(item => {
@@ -57,6 +58,7 @@ function App() {
 
     $('#menu-list').innerHTML = template;
     updateMenuCount();
+    console.log(3);
   };
 
   const updateMenuCount = () => {
@@ -101,6 +103,7 @@ function App() {
 
     await MenuApi.updateMenuName(this.currentCategory, menuId, updatedMenuName);
 
+    console.log(1);
     await render();
   };
 
@@ -124,7 +127,7 @@ function App() {
     await MenuApi.toggleSoldOutMenu(this.currentCategory, menuId);
   };
 
-  const changeCategory = async () => {
+  const changeCategory = async e => {
     this.currentCategory = e.target.dataset['categoryName'];
     $('.menu-title').innerText = `${e.target.innerText} 메뉴 관리`;
     await render();
@@ -169,7 +172,7 @@ function App() {
     $('nav').addEventListener('click', async e => {
       if (!e.target.classList.contains('cafe-category-name')) return;
 
-      changeCategory();
+      changeCategory(e);
     });
   };
 }
