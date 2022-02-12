@@ -7,13 +7,10 @@ const MenuApi = {
       throw new Error('[getAllMenuByCategor] Network response was not ok.');
     }
 
-    const data = await res.json();
-    console.log(111, data);
-    return data;
+    return res.json();
   },
 
   async addMenuName(category, newMenu) {
-    console.log(newMenu);
     const res = await fetch(`${BASE_URL}/category/${category}/menu`, {
       method: 'POST',
       headers: {
@@ -23,11 +20,9 @@ const MenuApi = {
     });
     const data = await res.json();
     if (!res.ok) {
-      console.error(data.message);
+      console.error(`[addMenuName] ${data.message}`);
       return;
     }
-
-    console.log(222, data);
   },
 
   async updateMenuName(category, menuId, updatedMenuName) {
@@ -40,7 +35,7 @@ const MenuApi = {
     });
     const data = await res.json();
     if (!res.ok) {
-      console.error(`[addMenuName] ${data.message}`);
+      console.error(`[updateMenuName] ${data.message}`);
       return;
     }
 
@@ -55,9 +50,8 @@ const MenuApi = {
       },
     );
     const data = await res.json();
-    console.log(data);
     if (!res.ok) {
-      console.error(`[addMenuName] ${data.message}`);
+      console.error(`[toggleSoldOutMenu] ${data.message}`);
       return;
     }
 
@@ -65,9 +59,13 @@ const MenuApi = {
   },
 
   async removeMenuName(category, menuId) {
-    await fetch(`${BASE_URL}/category/${category}/menu/${menuId}`, {
+    const res = await fetch(`${BASE_URL}/category/${category}/menu/${menuId}`, {
       method: 'DELETE',
     });
+    if (!res.ok) {
+      console.error(`[removeMenuName]`);
+      return;
+    }
   },
 };
 
